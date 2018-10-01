@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -21,7 +22,17 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
+//        $posts = Post::latest();
+//        if ($month = request('month')) {
+//            $posts->whereMonth('created_at', Carbon::parse($month)->month);
+//        }
+//        if ($year = request('year')) {
+//            $posts->whereYear('created_at', $year);
+//        }
+//        $posts = $posts->get();
+        $posts = Post::latest()
+            ->filter(request(['month', 'year']))
+            ->get();
 
         return view('posts.index', ['posts' => $posts]);
     }
@@ -63,8 +74,9 @@ class PostsController extends Controller
 
         auth()->user()->publish(new Post(request(['title', 'body'])));
 //        Post::create(request(['title', 'body']));
+        session()->flash('message', 'You are successfully published the post!');
 
-        return redirect('/home');
+        return redirect('/');
     }
 
 }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrationRequest;
+use App\Mail\WelcomeMessage;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class RegistrationController extends Controller
 {
@@ -17,21 +20,17 @@ class RegistrationController extends Controller
         return view('registration.create');
     }
 
-    public function store()
+    public function store(RegistrationRequest $request)
     {
-        $this->validate(request(), [
-           'name' => 'required|string|max:255',
-           'email' => 'required|string|email|max:60|unique:users',
-           'password' => 'required|string|min:6|confirmed',
-        ]);
-
         $user = User::create([
             'name' => request('name'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
         ]);
         auth()->login($user);
+        \Mail::to($user)->send(new WelcomeMessage);
+        session()->flash('message', 'You are successfully signed in!');
 
-        return redirect('/home');
+        return redirect('/');
     }
 }
