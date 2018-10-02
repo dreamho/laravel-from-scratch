@@ -28,7 +28,7 @@ class RegistrationController extends Controller
             'password' => bcrypt(request('password')),
         ]);
         auth()->login($user);
-        \Mail::to($user)->send(new WelcomeMessage);
+        \Mail::to($user)->send(new WelcomeMessage($user));
         session()->flash('message', 'You are successfully signed in!');
 
         return redirect('/');

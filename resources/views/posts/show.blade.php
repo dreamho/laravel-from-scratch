@@ -5,6 +5,13 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{ $post->title }}</h5>
+
+            @if (count($post->tags) > 0)
+                @foreach ($post->tags as $tag)
+                    <li><a href="/posts/tags/{{ $tag->name }}">{{ $tag->name }}</a></li>
+                @endforeach
+            @endif
+
             <p class="card-text">{{ $post->body }}</p>
         </div>
     </div>
