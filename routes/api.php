@@ -19,8 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('users/register', 'Api\AuthController@register');
 Route::post('users/login', 'Api\AuthController@login');
-Route::get('users/logout', 'Api\AuthController@logout');
 
 Route::group(['middleware' => 'jwt.auth'], function(){
+    Route::get('users/logout', 'Api\AuthController@logout');
     Route::get('posts', 'Api\PostsController@index');
+    Route::get('users', 'Api\AuthController@index');
 });

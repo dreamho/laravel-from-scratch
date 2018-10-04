@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\User;
 use JWTFactory;
@@ -43,5 +44,12 @@ class AuthController extends Controller
         JWTAuth::invalidate(JWTAuth::getToken());
 
         return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function index()
+    {
+        $users = User::all();
+
+        return UserResource::collection($users);
     }
 }
