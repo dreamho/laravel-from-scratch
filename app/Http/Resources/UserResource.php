@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'posts' => PostResource::collection($this->posts),
             'comments' => CommentResource::collection($this->comments),
+
         ];
     }
 }
