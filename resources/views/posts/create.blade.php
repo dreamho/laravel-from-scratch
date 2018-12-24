@@ -16,6 +16,11 @@
         </div>
 
         <div class="form-group">
+            <label for="title">Tags:</label>
+            <input class="form-control" type="text" name="tags">
+        </div>
+
+        <div class="form-group">
             <button type="submit" class="btn btn-primary">Publish</button>
         </div>
 

@@ -27,6 +27,13 @@ class Post extends Model
         ]);
     }
 
+    public function addTags($name)
+    {
+        $this->tags()->create([
+            'name'    => $name,
+        ]);
+    }
+
     public function scopeFilter($query, $filters)
     {
         if (isset($filters['month'])) {

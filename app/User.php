@@ -38,8 +38,14 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function publish(Post $post)
+    public function publish(Post $post, $tags)
     {
-        $this->posts()->save($post);
+//        dd($tag['tags']);die;
+        $post = $this->posts()->save($post);
+        $tags = explode(',', $tags);
+        foreach($tags as $tag) {
+           $post->addTags(trim($tag));
+        }
+
     }
 }
